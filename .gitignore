@@ -1,0 +1,13 @@
+.build/
+.swiftpm/
+.DS_Store
+*.xcodeproj/xcuserdata/
+
+# Swift build output
+.build/
+.swiftpm/
+.DS_Store
+
+# Xcode user-specific files
+xcuserdata/
+*.xcuserstate
