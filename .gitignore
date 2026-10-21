@@ -13,3 +13,5 @@ xcuserdata/
 *.xcuserstate
 
 ClipSafe.app/
+
+/release/
