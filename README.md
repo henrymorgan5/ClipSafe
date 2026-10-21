@@ -1,61 +1,64 @@
 # ClipSafe
 
-A local-first macOS clipboard history app. ClipSafe captures text copied to the macOS pasteboard and keeps a searchable history in your user Application Support directory.
+ClipSafe is a lightweight clipboard history app for macOS, built with Swift, SwiftUI, and AppKit.
 
 ## Features
 
-- Menu bar popover
-- Global shortcut: **Option + Command + V**
-- Search clipboard history
-- Copy an older item back to the clipboard
-- Pin and delete individual entries
-- Pause and resume monitoring
-- Clear all history
-- Local JSON storage; no account, cloud sync, telemetry, or network requests
-- History retained until manually deleted (up to 1,000 entries in this initial version)
+- Automatically tracks clipboard changes.
+- Searchable clipboard history.
+- Persistent history across app restarts.
+- Seven-day history retention.
+- Pin and restore clipboard entries.
+- Pause and resume monitoring.
+- Delete individual entries or clear all history.
+- Global Option + Command + V keyboard shortcut.
+- Local JSON storage, capped at 1,000 entries.
 
 ## Requirements
 
-- macOS 13 or later
-- Apple Silicon or Intel Mac
-- Swift 5.9 or later
-- Xcode is recommended. The Command Line Tools may be sufficient to compile, depending on the macOS SDK installed.
+- macOS
+- Swift and Swift Package Manager
 
-## Build and run
+## Build from source
 
-From this directory:
+Clone the repository:
 
-```sh
-swift build
-swift run
+```bash
+git clone https://github.com/henrymorgan5/ClipSafe.git
+cd ClipSafe
+swift build -c release
 ```
 
-For a distributable `.app` bundle, use Xcode or create a signed/notarized release build. This initial repository is a source project, not a pre-signed application.
+The release executable is created at `.build/release/ClipSafe`.
 
-## Privacy notes
+## Data and privacy
 
-Clipboard contents can include secrets. ClipSafe stores captured text locally in:
+Clipboard history is stored locally at:
 
 `~/Library/Application Support/ClipSafe/history.json`
 
-No clipboard content is sent over the network. History remains until you clear it, subject to the 1,000-entry cap. Pause monitoring before copying sensitive content. This first version does not yet provide per-app exclusions, encrypted storage, automatic secret detection, or a secure auto-expiring history.
+Entries older than seven days are removed during history loading and saving. Pinned entries are also subject to this retention period.
 
-Clipboard monitoring polls the macOS pasteboard approximately every 0.45 seconds. Clipboard changes made and replaced between polls may be missed. The source-app label is best-effort because the frontmost app can change before the poll runs.
+**Important:** History is stored as unencrypted JSON. Avoid copying passwords or other confidential information while monitoring is enabled.
 
-## Keyboard shortcut
+ClipSafe does not implement cloud synchronisation.
 
-The app registers Option + Command + V as a global hotkey. If another application already owns that combination, the registration may fail; custom shortcut configuration is not implemented yet.
+## Testing
 
-## Development
+Manual testing has confirmed:
 
-```sh
-swift test
-```
+- History persists after restarting.
+- Clipboard monitoring can be paused.
+- Individual entries can be deleted.
+- All history can be cleared.
+- The keyboard shortcut works.
+
+These are manual test results; automated tests have not been confirmed as passing.
 
 ## Contributing
 
-Issues and pull requests are welcome. Please include reproduction steps and tests for bug fixes.
+Bug reports, feature suggestions, and pull requests are welcome. Please test changes before submitting a pull request.
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+See [LICENSE](LICENSE) for the project's license.
